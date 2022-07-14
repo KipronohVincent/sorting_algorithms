@@ -6,7 +6,7 @@
 
 * [tests](./tests): Folder of test files. 
 
-## Data Structure and Functions :raised_hands:
+## Data Structure and Functions 
 
 * [print_array.c](./print_array.c): C function that prints an array of integers
 * [print_list.c](./print_list.c): C function that prints a `listint_t`
