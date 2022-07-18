@@ -6,26 +6,33 @@
  **/
 void bubble_sort(int *array, size_t size)
 {
-unsigned int i = 0, j = 0, swap = 0;
-if (size < 2)
-{
-return;
-}
-else
-{
-for (i = 0; i < size; i++)
-{
-for (j = 0; j < size - i - 1; j++)
-{
-if (array[j] > array[j + 1])
-{
-swap = array[j];
-array[j] = array[j + 1];
-array[j + 1] = swap;
-print_array(array, size);
-}
-}
-}
-}
+	unsigned int j = 0;
+	unsigned int x = 0;
+	unsigned int swap = 0;
+
+	if (size < 2)
+	{
+		return;
+	}
+	else
+	{
+		for (x = 0; x < size; x++)
+		{
+			for (j = 0; j < size - x - 1; j++)
+			{
+				if (array[j] > array[j + 1])
+				{
+					swap = array[j];
+					array[j] = array[j + 1];
+					array[j + 1] = swap;
+					print_array(array, size);
+				}
+				else
+				{
+					continue;
+				}
+			}
+		}
+	}
 }
 
