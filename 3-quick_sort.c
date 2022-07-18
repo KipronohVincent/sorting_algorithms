@@ -1,75 +1,73 @@
 #include "sort.h"
-
 /**
- * quick_sort - sorts an array with the Quicksort algorithm
- * @array: array of ints to sort
- * @size: size of the array
- */
-void quick_sort(int *array, size_t size)
+ *change_position - function that changes the position of the numbers
+ *@array: array
+ *@number1: first number
+ *@number2: second number
+ *@size: size of the array
+ **/
+void change_position(int *array, int *number1, int *number2, size_t size)
 {
-	if (size < 2)
-		return;
+	int exchange_position = *number1;
 
-	quick_recursion(array, 0, (int)size - 1, size);
+	*number1 = *number2;
+	*number2 = exchange_position;
+	print_array(array, size);
 }
-
 /**
- * quick_recursion - helper function for Quicksort
- * @array: array to sort
- * @left: index of the left element
- * @right: index of the right element
- * @size: size of the array
- */
-void quick_recursion(int *array, int left, int right, size_t size)
+ *partition - partition function for the array
+ *@array: array
+ *@low: low
+ *@high: high
+ *@size: size of the array
+ *Return: numero de cambios realizados
+ **/
+int partition(int *array, int low, int high, size_t size)
 {
-	int piv;
+	int pivot = array[high];
+	int Index = low;
+	int i = 0;
 
-	if (left < right)
+	for (i = low; i < high; i++)
 	{
-		piv = partition(array, left, right, size);
-		quick_recursion(array, left, piv - 1, size);
-		quick_recursion(array, piv + 1, right, size);
-	}
-}
-
-/**
- * partition - gives a piv index for Quicksort
- * @array: array to find the piv in
- * @left: index of the left element
- * @right: index of the right element
- * @size: size of the array
- *
- * Return: the index of the piv element
- */
-int partition(int *array, int left, int right, size_t size)
-{
-	int tmp, i;
-	int j;
-
-	i = left - 1;
-
-	for (j = left; j < right; j++)
-	{
-		if (array[j] < array[right])
+		if (array[i] <= pivot)
 		{
-			i++;
-			if (i != j)
-			{
-				tmp = array[i];
-				array[i] = array[j];
-				array[j] = tmp;
-				print_array(array, size);
-			}
+			if (Index != i)
+				change_position(array, &array[i], &array[Index], size);
+			Index++;
 		}
 	}
-
-	if (array[right] < array[i + 1])
-	{
-		tmp = array[i + 1];
-		array[i + 1] = array[right];
-		array[right] = tmp;
-		print_array(array, size);
-	}
-
-	return (i + 1);
+	if (Index != high)
+		change_position(array, &array[high], &array[Index], size);
+	return (Index);
 }
+/**
+ *quickSort - function to quicksort
+ *@array: array
+ *@low: low
+ *@high: high
+ *@size: size of the array
+ **/
+void quickSort(int *array, int low, int high, size_t size)
+{
+	int changes = 0;
+
+	if (low < high)
+	{
+		changes = partition(array, low, high, size);
+		quickSort(array, low, changes - 1, size);
+		quickSort(array, changes + 1, high, size);
+	}
+}
+/**
+ *quick_sort - sorts an array of integers in ascending order
+ *@array: array
+ *@size: size of the array
+ **/
+void quick_sort(int *array, size_t size)
+{
+	if (!array || size < 2)
+		return;
+	quickSort(array, 0, size - 1, size);
+}
+
